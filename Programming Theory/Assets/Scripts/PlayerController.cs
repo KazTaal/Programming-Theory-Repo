@@ -5,30 +5,36 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Movement speed
-    public float moveSpeed = 5f;
+    public float horizontalInput;
+    private float speed = 15.0f;
+    private float xRange = 12.0f;
 
     // Reference to the GameManager
     private GameManager gameManager;
+  
 
     void Start()
     {
         gameManager = GameManager.Instance;
+
     }
 
     void Update()
     {
-        // Automatically move the player forward
-        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-
-        // Optionally, add controls to move left/right or jump
-    }
-
-    // Example: Trigger end of level when player reaches a certain point
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("LevelEnd"))
+       if (!gameManager.levelPaused) 
+       {
+       if (transform.position.x < -xRange)
         {
-            gameManager.EndLevel();
+            transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
         }
+        if (transform.position.x > xRange)
+        {
+            transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
+        }
+        horizontalInput = Input.GetAxis("Horizontal");
+        transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
+       }
     }
+
+    
 }

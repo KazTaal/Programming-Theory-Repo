@@ -21,6 +21,11 @@ public class GameManager : MonoBehaviour
 
     // Flag to check if the level has ended
     public bool levelEnded = false;
+    public bool levelPaused = false;
+
+    public GameObject[] objectPrefabs;
+    private float spawnDelay = 2;
+    private float spawnInterval = 3.5f;
 
     void Awake()
     {
@@ -34,6 +39,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        InvokeRepeating("SpawnObjects", spawnDelay, spawnInterval);
+     //   playerControllerScript = GameObject.Find("Player").GetComponent<PlayerControllerX>();
     }
 
     // Method to increase extinguish power
@@ -58,12 +69,35 @@ public class GameManager : MonoBehaviour
         squadManager.UpdateSquad(extinguishPower, maxExtinguishPower);
     }
 
+     void SpawnObjects ()
+    {
+        // Set random spawn location and random object index
+        Vector3 spawnLocation = new Vector3(Random.Range(-12, 12), 0, 18);
+        int index = Random.Range(0, objectPrefabs.Length);
+
+        // If game is still active, spawn new object
+        if (!levelPaused)
+        {
+            Instantiate(objectPrefabs[index], spawnLocation, objectPrefabs[index].transform.rotation);
+        }
+
+    }
+
     // Method to end the level
     public void EndLevel()
     {
         levelEnded = true;
         // Trigger LevelEndManager or other end-of-level logic
         LevelEndManager.Instance.HandleLevelEnd(extinguishPower);
+    }
+
+    public void PauseLevel()
+    {
+        levelPaused = true;
+    }
+    public void ResumeLevel()
+    {
+        levelPaused = false;
     }
 
     // Reset level (optional)

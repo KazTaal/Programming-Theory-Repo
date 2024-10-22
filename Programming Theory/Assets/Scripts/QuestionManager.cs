@@ -74,6 +74,7 @@ public class QuestionManager : MonoBehaviour
         choiceAText.text = currentQuestion.choiceA;
         choiceBText.text = currentQuestion.choiceB;
         questionPanel.SetActive(true);
+        gameManager.PauseLevel();
     }
 
     void OnChoiceAClicked()
@@ -102,5 +103,6 @@ public class QuestionManager : MonoBehaviour
 
         // Hide the question panel after answering
         questionPanel.SetActive(false);
+        gameManager.ResumeLevel();
     }
 }

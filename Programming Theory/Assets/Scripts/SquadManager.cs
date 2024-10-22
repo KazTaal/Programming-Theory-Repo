@@ -36,18 +36,24 @@ public class SquadManager : MonoBehaviour
     // Adjust the number of firemen
     if (desiredFiremen > currentFiremen)
     {
-        // Add firemen with position offset
-        for (int i = currentFiremen; i < desiredFiremen; i++)
-        {
-            // Calculate offset position (you can adjust spacing)
-            Vector3 offset = new Vector3(i * 2.0f, 0, 0); // Spacing firemen 2 units apart on x-axis
-            GameObject newFireman = Instantiate(firemanPrefab, firemanParent);
-            
-            // Set the position of the new fireman
-            newFireman.transform.localPosition = offset;
-            
-            firemenList.Add(newFireman);
-        }
+       for (int i = currentFiremen; i < desiredFiremen; i++)
+{
+    // Adjust offset direction based on whether i is even or odd
+    float direction = (i % 2 == 0) ? 1.0f : -1.0f;
+
+    // If i == 0, use direction 1.0f (this handles your i == 0 case)
+    if (i == 0) i = 1;
+
+    // Calculate the position offset
+    Vector3 offset = new Vector3(i * 2.0f * direction, 0, 0);
+
+    // Instantiate and position the new fireman
+    GameObject newFireman = Instantiate(firemanPrefab, firemanParent);
+    newFireman.transform.localPosition = offset;
+
+    // Add the new fireman to the list
+    firemenList.Add(newFireman);
+}
     }
     else if (desiredFiremen < currentFiremen)
     {
