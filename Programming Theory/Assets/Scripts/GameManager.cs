@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
     public bool levelPaused = false;
 
     public GameObject[] objectPrefabs;
-    private float spawnDelay = 2;
-    private float spawnInterval = 3.5f;
+    private float spawnDelay = 0;
+    private float spawnInterval = 1.5f;
 
     void Awake()
     {
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         int index = Random.Range(0, objectPrefabs.Length);
 
         // If game is still active, spawn new object
-        if (!levelPaused)
+        if (!levelPaused && !levelEnded)
         {
             Instantiate(objectPrefabs[index], spawnLocation, objectPrefabs[index].transform.rotation);
         }

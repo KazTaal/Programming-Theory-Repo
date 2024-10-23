@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShootProjectile : MonoBehaviour
 {
     private float spawnDelay = 0;
-    private float spawnInterval = 0.3f;
+    private float spawnInterval = 0.5f;
     public GameObject projectilePrefab;
     private GameManager gameManager;
 
@@ -23,7 +23,7 @@ public class ShootProjectile : MonoBehaviour
     }
     void SprayWater()
     {
-        if (!gameManager.levelPaused)
+        if (!gameManager.levelPaused && !gameManager.levelEnded)
         {
         Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
         }

@@ -34,7 +34,8 @@ public class LevelEndManager : MonoBehaviour
     {
         // Show the fire
         fireObject.SetActive(true);
-
+        
+           
         // Check if extinguish power is sufficient
         if (currentPower >= controlThreshold)
         {

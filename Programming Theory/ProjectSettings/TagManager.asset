@@ -8,6 +8,8 @@ TagManager:
   - Fireman
   - Projectile
   - Background
+  - Particle
+  - GameOver
   layers:
   - Default
   - TransparentFX

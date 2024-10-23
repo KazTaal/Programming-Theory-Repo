@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveProjectile : MonoBehaviour
 {
-       public float speed = 40.0f;
+       private float speed = 15.0f;
        private float topOffscreen = 10;
 
     // Start is called before the first frame update

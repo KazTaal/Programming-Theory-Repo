@@ -66,6 +66,7 @@ public class QuestionManager : MonoBehaviour
 
     void ShowQuestion()
     {
+        if (!gameManager.levelEnded){
         if (currentQuestionIndex >= questions.Length)
             return;
 
@@ -75,6 +76,7 @@ public class QuestionManager : MonoBehaviour
         choiceBText.text = currentQuestion.choiceB;
         questionPanel.SetActive(true);
         gameManager.PauseLevel();
+        }
     }
 
     void OnChoiceAClicked()
