@@ -2,25 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveProjectile : MonoBehaviour
+public abstract class MoveProjectile : MonoBehaviour
 {
-       private float speed = 15.0f;
-       private float topOffscreen = 10;
+    protected float speed = 12.0f;
 
-    // Start is called before the first frame update
-    void Start()
+    // Virtual method for movement (polymorphism)
+    protected virtual void Move()
     {
-        
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
-    // Update is called once per frame
-    void Update()
-    {   
-        
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
-         if (transform.position.z >= topOffscreen)
-        {
-            Destroy(gameObject);
-        }
+    // Method to destroy the entity (abstraction)
+    public void DestroyEntity()
+    {
+        Destroy(gameObject);
+    }
+
+    // Common method to check if the object is off-screen (encapsulation)
+    protected bool IsOffScreen(float boundary)
+    {
+        return transform.position.z > boundary;
     }
 }

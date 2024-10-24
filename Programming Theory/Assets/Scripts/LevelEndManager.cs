@@ -13,7 +13,7 @@ public class LevelEndManager : MonoBehaviour
     public TextMeshProUGUI resultText;
 
     // Threshold to control the fire
-    public float controlThreshold = 70f;
+    public float controlThreshold = 15f;
 
     void Awake()
     {

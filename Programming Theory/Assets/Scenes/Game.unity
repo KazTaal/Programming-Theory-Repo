@@ -5664,12 +5664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10862521cc818401bad69e1a0a8f1394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: 1
-  extinguishPower: 0
-  maxExtinguishPower: 100
   squadManager: {fileID: 740549074}
-  levelEnded: 0
-  levelPaused: 0
   objectPrefabs:
   - {fileID: 6492998803155811110, guid: 3c07f89bf5d1e40c88e6fa0156121fab, type: 3}
 --- !u!4 &313856433
@@ -6274,7 +6269,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firemanPrefab: {fileID: 4871305046518590281, guid: e823135db57cf4e908e5782663d7f260, type: 3}
-  firemanParent: {fileID: 307963227}
+  player: {fileID: 2020406140}
+  firemanParent: {fileID: 2020406145}
   maxFiremen: 10
 --- !u!4 &740549075
 Transform:
@@ -6669,7 +6665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireObject: {fileID: 279768884}
   resultText: {fileID: 59314644}
-  controlThreshold: 20
+  controlThreshold: 40
 --- !u!4 &1292072321
 Transform:
   m_ObjectHideFlags: 0
@@ -7095,18 +7091,33 @@ MonoBehaviour:
   choiceBButton: {fileID: 87747289}
   questions:
   - question: What is the highest value?
-    choiceA: 12
-    choiceB: 14
+    choiceA: 6
+    choiceB: 8
     isChoiceACorrect: 0
     extinguishPowerChange: 10
   - question: What is the highest value?
-    choiceA: 5
-    choiceB: 4
+    choiceA: 11
+    choiceB: 10
     isChoiceACorrect: 1
     extinguishPowerChange: 10
   - question: What is the highest value?
-    choiceA: 7
-    choiceB: 6
+    choiceA: 4
+    choiceB: 3
+    isChoiceACorrect: 1
+    extinguishPowerChange: 10
+  - question: What is the highest value?
+    choiceA: 28
+    choiceB: 31
+    isChoiceACorrect: 0
+    extinguishPowerChange: 10
+  - question: What is the highest value?
+    choiceA: 14
+    choiceB: 16
+    isChoiceACorrect: 0
+    extinguishPowerChange: 10
+  - question: What is the highest value?
+    choiceA: 6
+    choiceB: 5
     isChoiceACorrect: 1
     extinguishPowerChange: 10
 --- !u!4 &1832949703
@@ -7267,7 +7278,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 313856433}
   - {fileID: 1832949703}
-  - {fileID: 740549075}
   - {fileID: 1292072321}
   - {fileID: 963194228}
   - {fileID: 705507995}
@@ -7277,3 +7287,4 @@ SceneRoots:
   - {fileID: 2020406145}
   - {fileID: 257114259}
   - {fileID: 1329696728}
+  - {fileID: 740549075}

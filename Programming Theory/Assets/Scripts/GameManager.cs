@@ -8,20 +8,21 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     // Current level number
-    public int currentLevel = 1;
-
+    public int currentLevel { get; private set; } = 1; // ENCAPSULATION
+    
     // Extinguish power variable
-    public float extinguishPower = 0f;
+    public float extinguishPower { get; private set; } = 0f; // ENCAPSULATION
 
     // Maximum extinguish power required to control the fire
-    public float maxExtinguishPower = 100f;
+    public float maxExtinguishPower { get; private set; } = 100f; // ENCAPSULATION
+
 
     // Reference to SquadManager
-    public SquadManager squadManager;
+    public SquadManager squadManager; // ABSTRACTION
 
     // Flag to check if the level has ended
-    public bool levelEnded = false;
-    public bool levelPaused = false;
+     public bool levelEnded { get; private set; } = false; // ENCAPSULATION
+    public bool levelPaused { get; private set; } = false; // ENCAPSULATION
 
     public GameObject[] objectPrefabs;
     private float spawnDelay = 0;
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Persist across scenes if needed
+          //  DontDestroyOnLoad(gameObject); // Persist across scenes if needed
         }
         else
         {
@@ -43,8 +44,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        squadManager = FindObjectOfType<SquadManager>();
         InvokeRepeating("SpawnObjects", spawnDelay, spawnInterval);
-     //   playerControllerScript = GameObject.Find("Player").GetComponent<PlayerControllerX>();
     }
 
     // Method to increase extinguish power
@@ -106,6 +107,8 @@ public class GameManager : MonoBehaviour
         extinguishPower = 0f;
         levelEnded = false;
         squadManager.UpdateSquad(extinguishPower, maxExtinguishPower);
+        squadManager.ResetSquad();
         // Reset other components as needed
     }
+    
 }

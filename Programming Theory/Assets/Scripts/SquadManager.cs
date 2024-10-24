@@ -5,6 +5,7 @@ public class SquadManager : MonoBehaviour
 {
     // Prefab for a fireman
     public GameObject firemanPrefab;
+    public GameObject player;
 
     // Parent object to hold firemen
     public Transform firemanParent;
@@ -20,7 +21,9 @@ public class SquadManager : MonoBehaviour
 
     void Start()
     {
+        
         UpdateSquad(0f, GameManager.Instance.maxExtinguishPower);
+
     }
 
     // Method to update the squad based on extinguish power
@@ -41,16 +44,21 @@ public class SquadManager : MonoBehaviour
     // Adjust offset direction based on whether i is even or odd
     float direction = (i % 2 == 0) ? 1.0f : -1.0f;
 
-    // If i == 0, use direction 1.0f (this handles your i == 0 case)
-    if (i == 0) i = 1;
+   int factor;
+   if (i == 2 || i == 3) factor = 2;
+   else if (i == 4 || i == 5) factor = 3;
+   else if (i == 6 || i == 7) factor = 4;
+   else if (i == 8 || i == 9) factor = 5;
+   else factor = 1;
 
     // Calculate the position offset
-    Vector3 offset = new Vector3(i * 2.0f * direction, 0, 0);
-
+    Vector3 offset = new Vector3(factor * 2.0f * direction, 0, 0);
+    
     // Instantiate and position the new fireman
     GameObject newFireman = Instantiate(firemanPrefab, firemanParent);
-    newFireman.transform.localPosition = offset;
-
+    //newFireman.transform.localPosition = offset;
+    newFireman.transform.position = player.transform.position + offset;
+    
     // Add the new fireman to the list
     firemenList.Add(newFireman);
 }
@@ -66,5 +74,15 @@ public class SquadManager : MonoBehaviour
     }
 
     currentFiremen = desiredFiremen;
+}
+public void ResetSquad()
+{
+    // Destroy existing firemen
+    foreach (GameObject fireman in firemenList)
+    {
+        Destroy(fireman);
+    }
+    firemenList.Clear(); // Clear the list
+    currentFiremen = 0;  // Reset current firemen count
 }
 }

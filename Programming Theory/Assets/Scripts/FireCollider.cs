@@ -25,14 +25,18 @@ public class FireCollider : MonoBehaviour
         {
             gameManager.EndLevel();
         }
-        if (other.CompareTag("GameOver"))
+        else if (other.CompareTag("GameOver"))
         {
             gameManager.EndLevel();
         }
-        if (other.CompareTag("Projectile"))
+        else if (other.CompareTag("Projectile"))
         {
-            Instantiate(explosionParticle, transform.position, transform.rotation);
+            TriggerExplosion();
             Destroy(gameObject);
         }
+    }
+    private void TriggerExplosion() // ABSTRACTION
+    {
+        Instantiate(explosionParticle, transform.position, transform.rotation);
     }
 }
