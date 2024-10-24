@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // Singleton instance
+    public static GameManager Instance;
+
     // Current level number
     public int currentLevel = 1;
 
@@ -16,98 +19,93 @@ public class GameManager : MonoBehaviour
     // Reference to SquadManager
     public SquadManager squadManager;
 
-    // Flag to check if the level has ended or paused
+    // Flag to check if the level has ended
     public bool levelEnded = false;
     public bool levelPaused = false;
 
-    // Object spawning
     public GameObject[] objectPrefabs;
-    private float spawnDelay = 0f;
+    private float spawnDelay = 0;
     private float spawnInterval = 1.5f;
 
-    public static GameManager Instance { get; private set; } // Singleton instance
-
-    private void Awake()
+    void Awake()
     {
-        // Singleton Pattern implementation
+        // Implement Singleton pattern
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: keeps the GameManager persistent across scenes
+            DontDestroyOnLoad(gameObject); // Persist across scenes if needed
         }
         else
         {
-            Destroy(gameObject); // Prevent duplicate instances of GameManager
+            Destroy(gameObject);
         }
     }
 
     void Start()
     {
-        // Repeatedly spawn objects at intervals
-        InvokeRepeating(nameof(SpawnObjects), spawnDelay, spawnInterval);
+        InvokeRepeating("SpawnObjects", spawnDelay, spawnInterval);
+     //   playerControllerScript = GameObject.Find("Player").GetComponent<PlayerControllerX>();
     }
 
-    // Increase extinguish power
+    // Method to increase extinguish power
     public void IncreaseExtinguishPower(float amount)
     {
         extinguishPower += amount;
         if (extinguishPower > maxExtinguishPower)
             extinguishPower = maxExtinguishPower;
 
-        // Update the fireman squad accordingly
+        // Update SquadManager
         squadManager.UpdateSquad(extinguishPower, maxExtinguishPower);
     }
 
-    // Decrease extinguish power
+    // Method to decrease extinguish power
     public void DecreaseExtinguishPower(float amount)
     {
         extinguishPower -= amount;
         if (extinguishPower < 0f)
             extinguishPower = 0f;
 
-        // Update the fireman squad accordingly
+        // Update SquadManager
         squadManager.UpdateSquad(extinguishPower, maxExtinguishPower);
     }
 
-    // Spawn objects at random positions if level is not paused or ended
-    private void SpawnObjects()
+     void SpawnObjects ()
     {
+        // Set random spawn location and random object index
+        Vector3 spawnLocation = new Vector3(Random.Range(-12, 12), 0, 18);
+        int index = Random.Range(0, objectPrefabs.Length);
+
+        // If game is still active, spawn new object
         if (!levelPaused && !levelEnded)
         {
-            Vector3 spawnLocation = new Vector3(Random.Range(-12, 12), 0, 18);
-            int index = Random.Range(0, objectPrefabs.Length);
-
             Instantiate(objectPrefabs[index], spawnLocation, objectPrefabs[index].transform.rotation);
         }
+
     }
 
-    // End the level and show results
+    // Method to end the level
     public void EndLevel()
     {
         levelEnded = true;
+        // Trigger LevelEndManager or other end-of-level logic
         LevelEndManager.Instance.HandleLevelEnd(extinguishPower);
     }
 
-    // Pause the level
     public void PauseLevel()
     {
         levelPaused = true;
-        // Additional logic for pausing the game (e.g., stopping time, freezing objects)
     }
-
-    // Resume the level
     public void ResumeLevel()
     {
         levelPaused = false;
-        // Additional logic for resuming the game (e.g., restarting time)
     }
 
-    // Reset the level and extinguish power, firemen squad, etc.
+    // Reset level (optional)
     public void ResetLevel()
     {
         extinguishPower = 0f;
         levelEnded = false;
         squadManager.UpdateSquad(extinguishPower, maxExtinguishPower);
-        // Reset other components as needed (e.g., reposition objects, reset scores)
+        // Reset other components as needed
     }
 }
