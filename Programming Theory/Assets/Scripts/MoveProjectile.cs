@@ -7,11 +7,6 @@ public class MoveProjectile : MonoBehaviour
        private float speed = 15.0f;
        private float topOffscreen = 10;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
